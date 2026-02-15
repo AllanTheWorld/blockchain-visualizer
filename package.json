@@ -1,0 +1,12 @@
+{
+  "name": "blockchain-visualizer",
+  "version": "1.0.0",
+  "description": "A blockchain visualizer for understanding cryptocurrency mining and blockchain validation",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -m http.server 3000"
+  },
+  "keywords": ["blockchain", "crypto", "visualization"],
+  "author": "",
+  "license": "MIT"
+}

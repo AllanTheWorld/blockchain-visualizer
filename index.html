@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💕 Blockchain of Love 💕</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="prelim.css">
+</head>
+<body class="bg-gradient-to-br from-rose-50 via-pink-50 to-red-50 min-h-screen">
+
+  <div class="floating-hearts" id="floatingHearts"></div>
+
+  <div class="text-center py-8 mb-4">
+    <h1 class="title-font text-5xl font-bold text-rose-600 mb-2">
+      💕 Blockchain of Love 💕
+    </h1>
+    <p class="text-rose-500 text-lg">Building chains of trust, one heartfelt block at a time</p>
+  </div>
+
+  <div class="top-bar fixed top-20 left-1/2 transform -translate-x-1/2 z-20 
+              bg-gradient-to-r from-pink-400 via-rose-400 to-red-400 
+              rounded-full shadow-2xl p-4 flex gap-3 items-center flex-wrap justify-center
+              border-2 border-rose-300">
+    
+    <span id="status" class="valid font-semibold text-white px-4 py-2 rounded-full 
+           bg-gradient-to-r from-emerald-400 to-green-500 shadow-lg flex items-center gap-2">
+       Chain Valid
+    </span>
+
+    <input id="dataInput" type="text" placeholder="Enter block data" 
+           class="px-4 py-2 rounded-full border-2 border-rose-200 focus:border-rose-500 
+                  focus:outline-none bg-white text-rose-900 placeholder-rose-400 shadow-sm" />
+
+    <select id="difficulty" class="px-4 py-2 rounded-full border-2 border-rose-200 
+                                   focus:border-rose-500 focus:outline-none 
+                                   bg-white text-rose-900 shadow-sm cursor-pointer">
+      <option value="1">💗 Easy</option>
+      <option value="2" selected>💖 Medium</option>
+      <option value="3">💝 Hard</option>
+      <option value="4">💞 Nightmare</option>
+    </select>
+
+    <button onclick="mineBlock()" class="px-6 py-2 rounded-full font-bold 
+             bg-white text-rose-600 hover:bg-rose-100 hover:text-rose-700
+             shadow-lg transition-all duration-200 hover:scale-105 active:scale-95
+             border-2 border-white">
+      ✨ Mine Block
+    </button>
+  </div>
+
+  <div id="chain" class="chain mt-40 px-8 pb-12 flex gap-6 justify-center flex-wrap"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+  <script src="prelim.js"></script>
+  <script>
+    const chainDiv = document.getElementById("chain")
+    const statusEl = document.getElementById("status")
+
+    function render() {
+      chainDiv.innerHTML = ""
+
+      blockchain.chain.forEach((block, i) => {
+        const div = document.createElement("div")
+        div.className = "block"
+
+        if (
+          i > 0 &&
+          block.previousHash !== blockchain.chain[i - 1].hash
+        ) {
+          div.classList.add("invalid")
+        }
+
+        const hearts = ['💕', '💖', '💗', '💝', '💞', '💓'];
+        const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
+
+        div.innerHTML = `
+          <h2>${randomHeart} Block ${block.index}</h2>
+          <p><strong>💝 Timestamp:</strong><br>${block.timestamp}</p>
+          <p><strong>💌 Message:</strong></p>
+          <div class="data">${block.data}</div>
+          <p><strong>✨ Nonce:</strong> ${block.nonce}</p>
+          <p><strong>🔗 Previous Hash:</strong><br>${block.previousHash.slice(0,10)}...</p>
+          <p><strong>🌹 Hash:</strong><br>${block.hash.slice(0,10)}...</p>
+          ${i !== 0 ? `<button onclick="tamper(${i})">💔 Tamper Block</button>` : ""}
+        `
+
+        chainDiv.appendChild(div)
+      })
+
+      if (blockchain.isValid()) {
+        statusEl.textContent = "💚 Chain Valid"
+        statusEl.className = "valid"
+      } else {
+        statusEl.textContent = "💔 Chain Invalid"
+        statusEl.className = "invalid"
+      }
+    }
+
+    function mineBlock() {
+      const data = document.getElementById("dataInput").value || "No data"
+      blockchain.difficulty = parseInt(document.getElementById("difficulty").value)
+      const time = blockchain.addBlock(data)
+      render()
+      statusEl.textContent += ` (Mined in ${time} ms)`
+    }
+
+    function tamper(index) {
+      blockchain.chain[index].data = "Tampered Data"
+      render()
+    }
+
+    render()
+  </script>
+  <script>
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      const hearts = ['💕', '💖', '💗', '💝', '💞', '💓'];
+      
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+  </script>
+</body>
+</html>
