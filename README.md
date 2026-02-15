@@ -10,9 +10,9 @@ npm run dev
 
 ## 💖 Screenshots
 
-(./images/Screenshot%202026-02-15%20224359.png)
+![Blockchain App](./images/Screenshot%202026-02-15%20224359.png)
 
-(./images/Screenshot%202026-02-15%20224840.png)
+![Blockchain Details](./images/Screenshot%202026-02-15%20224840.png)
 
 ## Features
 - Mine blocks with adjustable difficulty levels
@@ -20,4 +20,5 @@ npm run dev
 - Interactive blockchain validation
 - Tamper detection
 - Real-time validation status
+
 
